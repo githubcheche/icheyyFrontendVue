@@ -26,12 +26,12 @@
             <el-form-item prop="password_confirmation" label="确认密码：">
               <el-input type="password" placeholder="请再次输入密码" v-model="params.password_confirmation"></el-input>
             </el-form-item>
-            <div class="login-failure" v-if="failure">
-              <div class="header">{{failure.message}}</div>
-              <ul class="list">
-                <li v-for="error in failure.data">{{error[0]}}</li>
-              </ul>
-            </div>
+            <!--<div class="login-failure" v-if="failure">-->
+              <!--<div class="header">{{failure.message}}</div>-->
+              <!--<ul class="list">-->
+                <!--<li v-for="error in failure.data">{{error[0]}}</li>-->
+              <!--</ul>-->
+            <!--</div>-->
             <div class="login-btn">
               <el-button class="btn-define" @click="submit()">注 册</el-button>
             </div>

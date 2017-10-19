@@ -68,14 +68,14 @@ export default {
   components: {
 //    HotTopics
   },
-  beforeRouteUpdate(to, from, next) {
+//  beforeRouteUpdate(to, from, next) {
 //    this.tagName = to.query;
 //    next();
-  },
-  beforeRouteLeave(to, from, next) {
+//  },
+//  beforeRouteLeave(to, from, next) {
 //    this.tagName = to.query;
 //    next();
-  },
+//  },
   mounted() {
 //    const validate_user = this.$route.query.validate;
 //    if (validate_user) {

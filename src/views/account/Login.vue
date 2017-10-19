@@ -41,7 +41,7 @@
 
 <script>
 //import api from '../../api';
-//import { mapState, mapMutations } from 'vuex';
+import { mapState, mapMutations } from 'vuex';
 import Headers from '../../components/Headers';
 //import openWindow from '../../tool/openWindow';
 
@@ -58,10 +58,10 @@ export default {
       }
     };
   },
-//  computed: mapState({
-//    success: state => state.account.login.success,
-//    failure: state => state.account.login.failure,
-//  }),
+  computed: mapState({
+    success: state => state.account.login.success,
+    failure: state => state.account.login.failure,
+  }),
   methods: {
     submit() {
 //      this.$store.dispatch('accountLoginSubmit', this.params);
