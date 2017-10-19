@@ -25,7 +25,7 @@
               </form>
             </div>
           </div>
-          <!--<div class="head-right">-->
+          <div class="head-right">
             <!--<div class="dropdown" v-if="auth.check()">-->
               <!--<span><img :src="auth.user.avatar" alt=""></span>-->
               <!--<p class="dropbtn">{{auth.user.name}}-->
@@ -54,16 +54,16 @@
                 <!--</a>-->
               <!--</div>-->
             <!--</div>-->
-            <!--<div v-if="!auth.check()" class="head-nav-login">-->
-              <!--<router-link class="this-login" to="/user/register">-->
-                <!--注册-->
-              <!--</router-link>-->
-            <!--</div>-->
-            <!--<div v-if="! auth.check()" class="head-nav-login">-->
-              <!--<router-link class="this-login" to="/user/login">-->
-                <!--登录-->
-              <!--</router-link>-->
-            <!--</div>-->
+            <div  class="head-nav-login"><!--v-if="!auth.check()"-->
+              <router-link class="this-login" to="/user/register">
+                注册
+              </router-link>
+            </div>
+            <div class="head-nav-login"><!--v-if="!auth.check()"-->
+              <router-link class="this-login" to="/user/login">
+                登录
+              </router-link>
+            </div>
             <!--<div style="float: right; padding-top: 2px">-->
               <!--<router-link v-if="auth.check()" to="/" style="margin-right: 20px" title="您目前没有新消息">-->
                 <!--<i class="fa fa-bell-o"></i>-->
@@ -73,7 +73,7 @@
                 <!--<i class="fa fa-pencil"></i> 写文章-->
               <!--</router-link>-->
             <!--</div>-->
-          <!--</div>-->
+          </div>
         </div>
       </el-col>
     </el-row>
