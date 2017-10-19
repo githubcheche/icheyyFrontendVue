@@ -64,7 +64,7 @@ export default {
   }),
   methods: {
     submit() {
-//      this.$store.dispatch('accountLoginSubmit', this.params);
+      this.$store.dispatch('accountLoginSubmit', this.params);
     },
     successWatcher(val, oldVal) {
 //      if (val && !oldVal) {

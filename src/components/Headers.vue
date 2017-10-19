@@ -54,12 +54,12 @@
                 <!--</a>-->
               <!--</div>-->
             <!--</div>-->
-            <div  class="head-nav-login"><!--v-if="!auth.check()"-->
+            <div v-if="!auth.check()" class="head-nav-login">
               <router-link class="this-login" to="/user/register">
                 注册
               </router-link>
             </div>
-            <div class="head-nav-login"><!--v-if="!auth.check()"-->
+            <div v-if="!auth.check()" class="head-nav-login">
               <router-link class="this-login" to="/user/login">
                 登录
               </router-link>
@@ -81,12 +81,12 @@
 </template>
 
 <script>
-//import { mapState } from 'vuex';
+import { mapState } from 'vuex';
 
 export default {
-//  computed: mapState({
-//    auth: state => state.account.auth,
-//  }),
+  computed: mapState({
+    auth: state => state.account.auth,
+  }),
   mounted() {
     //this.websocket();
   },
@@ -119,9 +119,9 @@ export default {
 //      }
     },
     logOut() {
-//      this.$store.dispatch('accountLogoutSubmit').then(
-//        res => { this.$router.push('/') }
-//      );
+      this.$store.dispatch('accountLogoutSubmit').then(
+        res => { this.$router.push('/') }
+      );
     }
   }
 }

@@ -1,5 +1,5 @@
 import Vue from 'vue';
-// import api from '../../api';
+import api from '../../api';
 import * as types from '../mutation-types';
 
 const AUTH_ACCESS_TOKEN = 'auth.access_token';
@@ -10,6 +10,7 @@ const localStorage = global.localStorage;
 const JSON = global.JSON;
 
 export default {
+  //初始 state 对象
   state: {
     auth: {
       check() {
@@ -29,6 +30,7 @@ export default {
     }
   },
   mutations: {
+    // 改变数值，运用store.commit('ACCOUNT_AUTH_STATUS_CHANGED')来改变状态
     ACCOUNT_AUTH_STATUS_CHANGED: (state, data) => {
       if (!data.status) {
         Vue.set(state.auth, 'access_token', null);
@@ -63,32 +65,32 @@ export default {
   },
   actions: {
     accountLoginSubmit({ commit }, params) {
-      // api.login(params).then((response) => {
-      //   if (response.data.status) {
-      //     console.log(response.data);
-      //     commit(types.ACCOUNT_AUTH_STATUS_CHANGED, response.data);
-      //     commit(types.ACCOUNT_LOGIN_SUCCESS);
-      //   } else {
-      //     console.log(response.data);
-      //     commit(types.ACCOUNT_LOGIN_FAILURE, response.data);
-      //   }
-      // })
+      api.login(params).then((response) => {
+        if (response.data.status) {
+          console.log(response.data);
+          commit(types.ACCOUNT_AUTH_STATUS_CHANGED, response.data);
+          commit(types.ACCOUNT_LOGIN_SUCCESS);
+        } else {
+          console.log(response.data);
+          commit(types.ACCOUNT_LOGIN_FAILURE, response.data);
+        }
+      })
     },
     accountLogoutSubmit({ commit }) {
-      // api.logout().then((response) => {
-      //   commit(types.ACCOUNT_AUTH_STATUS_CHANGED, { status: 0 });
-      // });
+      api.logout().then((response) => {
+        commit(types.ACCOUNT_AUTH_STATUS_CHANGED, { status: 0 });
+      });
     },
     accountRegisterSubmit({ commit }, params) {
-      // api.register(params).then((response) => {
-      //   if (response.data.status) {
-      //     //commit(types.ACCOUNT_AUTH_STATUS_CHANGED, response.data);
-      //     commit(types.ACCOUNT_REGISTER_SUCCESS);
-      //   } else {
-      //     console.log(response.data);
-      //     commit(types.ACCOUNT_REGISTER_FAILURE, response.data);
-      //   }
-      // })
+      api.register(params).then((response) => {
+        if (response.data.status) {
+          //commit(types.ACCOUNT_AUTH_STATUS_CHANGED, response.data);
+          commit(types.ACCOUNT_REGISTER_SUCCESS);
+        } else {
+          console.log(response.data);
+          commit(types.ACCOUNT_REGISTER_FAILURE, response.data);
+        }
+      })
     }
   }
 }
