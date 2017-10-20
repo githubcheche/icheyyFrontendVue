@@ -13,6 +13,7 @@
     "element-ui": "^2.0.0-alpha.3",
     "font-awesome": "^4.7.0",
     "vue": "^2.5.2",
+    "vue-markdown": "^2.2.4",
     "vue-resource": "^1.3.4",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.0"

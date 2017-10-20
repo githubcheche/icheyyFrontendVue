@@ -3,18 +3,19 @@
     <el-row :gutter="25">
       <el-col :span="10" :offset="5">
         <div style="border: 1px solid #fff;padding-top: 10px"></div>
-        <div class="content" ><!--v-for="(article, index) in articles"-->
+        <div v-for="(article, index) in articles" class="content" >
           <div class="content-body">
-            <router-link class="content-title" ><!--:to="{name: 'ArticleShow', params: {slug: article.id}}"-->
-              <h3>51651651651465146</h3><!--{{article.title}}-->
+            <router-link :to="{name: 'ArticleShow', params: {slug: article.id}}" class="content-title" >
+              <h3>{{article.title}}</h3>
             </router-link>
             <div style="padding-top: 5px; font-size: 13px; color: #bbb">由
-              <router-link >6516521651</router-link> 发表于 654165165</div><!--:to="{name: 'UserArticles', params: {slug: article.user.id}}"--><!--{{article.user.name}}--><!--{{article.created_at}}-->
+              <router-link :to="{name: 'UserArticles', params: {slug: article.user.id}}">{{article.user.name}}</router-link> 发表于 {{article.created_at}}
+            </div>
             <div class="content-body-body">
-              <!--{{ article.abstract }}-->65163516561 ...
+              {{ article.abstract }} ...
             </div>
             <div style="padding-top: 15px">
-              <!--<div v-for="tag in article.tags" style="float: left">
+              <div v-for="tag in article.tags" style="float: left">
                 <a v-if="tag" :href="'/#/articles?tag=' + tag.name" id="btn-topic">
                   # {{ tag.name }}
                 </a>
@@ -32,14 +33,13 @@
                   <i class="fa fa-heart"></i>
                 </span>
                 <span>{{ article.likes_count }}</span>
-              </div>-->
+              </div>
             </div>
           </div>
           <div style="border-bottom: 1px solid #ddd; padding-top: 50px"></div>
         </div>
         <div style="text-align: right; margin-top: 20px">
-          <el-pagination layout="prev, pager, next" :total="total" :page-size="page_size" @current-change="handleCurrentChange">
-          </el-pagination>
+          <el-pagination layout="prev, pager, next" :total="total" :page-size="page_size" @current-change="handleCurrentChange"/>
         </div>
       </el-col>
       <el-col :span="4" style="margin-top: 20px;">
@@ -50,10 +50,10 @@
 </template>
 
 <script>
-//import api from '../../api';
-//import { mapMutations } from 'vuex';
+import api from '../../api';
+import { mapMutations } from 'vuex';
 import { Loading } from 'element-ui';
-//import HotTopics from '../../components/HotTopics';
+import HotTopics from '../../components/HotTopics';
 let loadingInstance;
 
 export default {
@@ -66,7 +66,7 @@ export default {
     }
   },
   components: {
-//    HotTopics
+    HotTopics
   },
 //  beforeRouteUpdate(to, from, next) {
 //    this.tagName = to.query;
@@ -77,33 +77,33 @@ export default {
 //    next();
 //  },
   mounted() {
-//    const validate_user = this.$route.query.validate;
-//    if (validate_user) {
-//      if (validate_user == 'yes') {
-//        this.message_true();
-//      } else {
-//        this.message_false();
-//      }
-//    }
-//    let options = {
-//      target: document.querySelector('#app')
-//    };
-//    loadingInstance = Loading.service(options);
-//    this.get_articles(undefined);
+    const validate_user = this.$route.query.validate;
+    if (validate_user) {
+      if (validate_user == 'yes') {
+        this.message_true();
+      } else {
+        this.message_false();
+      }
+    }
+    let options = {
+      target: document.querySelector('#app')
+    };
+    loadingInstance = Loading.service(options);
+    this.get_articles(undefined);
   },
   methods: {
     get_articles(val) {
-//      api.get_articles({ params: {page: val, tag: this.tagName.tag} }).then((res) => {
-//        if (res.data.status == 1) {
-//          this.articles = res.data.data.data;
-//          this.total = Number(res.data.data.total);
-//          for (let index in this.articles) {
-//            this.articles[index].abstract = this.articles[index].body.substring(0, 150)
-//              .replace(/<\/?.+?>/g, "").replace(/ /g, "").replace(/&nbsp;/g, ' ').replace(/#/g, '');
-//          }
-//          loadingInstance.close();
-//        }
-//      })
+      api.get_articles({ params: {page: val, tag: this.tagName.tag} }).then((res) => {
+        if (res.data.status == 1) {
+          this.articles = res.data.data.data;
+          this.total = Number(res.data.data.total);
+          for (let index in this.articles) {
+            this.articles[index].abstract = this.articles[index].body.substring(0, 150)
+              .replace(/<\/?.+?>/g, "").replace(/ /g, "").replace(/&nbsp;/g, ' ').replace(/#/g, '');
+          }
+          loadingInstance.close();
+        }
+      })
     },
     message_true() {
 //      this.$notify.success({
@@ -120,7 +120,7 @@ export default {
 //      });
     },
     handleCurrentChange(page) {
-//      this.get_articles(page);
+      this.get_articles(page);
     },
   },
 //  watch: {

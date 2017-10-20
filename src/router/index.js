@@ -6,6 +6,7 @@ const Login = resolve => require(['../views/account/Login'], resolve) //懒加�
 const Register = resolve => require(['../views/account/Register'], resolve)
 
 const ArticleIndex = resolve => require(['../views/article/Index'], resolve)
+const ArticleShow = resolve => require(['../views/article/Show'], resolve)
 const Error404 = resolve => require(['../views/error/404'], resolve)
 
 Vue.use(Router)
@@ -32,6 +33,16 @@ export default new Router({
                     path: '/',
                     component: ArticleIndex,
                 },
+                {
+                    path: '/articles',
+                    name: 'ArticleIndex',
+                    component: ArticleIndex
+                },
+                {
+                    path: '/articles/:slug',
+                    name: 'ArticleShow',
+                    component: ArticleShow
+                }
             ]
         },
         {
