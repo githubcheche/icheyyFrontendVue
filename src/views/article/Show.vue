@@ -13,7 +13,7 @@
           </div>
           <div class="article-author">
             <router-link style="float: left" :to="{name: 'UserArticles', params: {slug: article.user.id}}">
-              <!--<img :src="article.user.avatar" alt="">-->
+              <img :src="article.user.avatar" alt="">
             </router-link>
             <div class="article-author-detail">
               <div>
@@ -43,7 +43,7 @@
             </el-button>
           </div>
           <div class="article-comment" v-if="auth.check()">
-            <!--<img :src="auth.user.avatar" alt="">-->
+            <img :src="auth.user.avatar" alt="">
             <form action="">
               <el-input type="textarea" :rows="4" placeholder="请输入评论内容" v-model="comment">
               </el-input>
@@ -89,7 +89,7 @@
         <div class="sidebar-author">
           <p>作者： {{article.user.name}}</p>
           <div style="border-bottom: 1px solid #eee; padding-top: 0px"></div>
-          <!--<img :src="article.user.avatar" alt="">-->
+          <img :src="article.user.avatar" alt="">
           <el-row>
             <el-col :span="8">
               <h2>{{article.user.followers_count}}</h2>
@@ -154,7 +154,7 @@ export default {
     this.reload();
   },
   created() {
-    this.reload();
+//    this.reload();
   },
   methods: {
     reload() {

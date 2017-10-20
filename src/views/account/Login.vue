@@ -67,18 +67,18 @@ export default {
       this.$store.dispatch('accountLoginSubmit', this.params);
     },
     successWatcher(val, oldVal) {
-//      if (val && !oldVal) {
-//        const redirectUrl = this.$route.query.redirect_url || '/';
-//        this.$router.push(redirectUrl);
-//      }
+      if (val && !oldVal) {
+        const redirectUrl = /*this.$route.query.redirect_url ||*/ '/';
+        this.$router.push(redirectUrl);
+      }
     },
 //    github_login() {
 //      window.open('https://api.laravue.org/github');
 //    }
   },
-//  watch: {
-//    success: 'successWatcher',
-//  }
+  watch: {
+    success: 'successWatcher',
+  }
 }
 </script>
 

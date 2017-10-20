@@ -67,11 +67,9 @@ export default {
     accountLoginSubmit({ commit }, params) {
       api.login(params).then((response) => {
         if (response.data.status) {
-          console.log(response.data);
           commit(types.ACCOUNT_AUTH_STATUS_CHANGED, response.data);
           commit(types.ACCOUNT_LOGIN_SUCCESS);
         } else {
-          console.log(response.data);
           commit(types.ACCOUNT_LOGIN_FAILURE, response.data);
         }
       })
@@ -79,6 +77,9 @@ export default {
     accountLogoutSubmit({ commit }) {
       api.logout().then((response) => {
         commit(types.ACCOUNT_AUTH_STATUS_CHANGED, { status: 0 });
+      }, function (response) {
+          //错误
+          commit(types.ACCOUNT_AUTH_STATUS_CHANGED, { status: 0 });
       });
     },
     accountRegisterSubmit({ commit }, params) {

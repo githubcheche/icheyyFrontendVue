@@ -27,7 +27,7 @@
           </div>
           <div class="head-right">
             <div class="dropdown" v-if="auth.check()">
-              <!--<span><img :src="auth.user.avatar" alt=""></span>-->
+              <span><img :src="auth.user.avatar" alt=""></span>
               <p class="dropbtn">{{auth.user.name}}
                 <span>
                   <i class="fa fa-caret-down"></i>

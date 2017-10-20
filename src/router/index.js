@@ -7,6 +7,10 @@ const Register = resolve => require(['../views/account/Register'], resolve)
 
 const ArticleIndex = resolve => require(['../views/article/Index'], resolve)
 const ArticleShow = resolve => require(['../views/article/Show'], resolve)
+const ArticleCreate = resolve => require(['../views/article/Create'], resolve)
+const ArticleEdit = resolve => require(['../views/article/Edit'], resolve)
+
+
 const Error404 = resolve => require(['../views/error/404'], resolve)
 
 Vue.use(Router)
@@ -42,7 +46,22 @@ export default new Router({
                     path: '/articles/:slug',
                     name: 'ArticleShow',
                     component: ArticleShow
-                }
+                },
+                {
+                    path: '/article/create',
+                    meta: {
+                        requireAuth: true
+                    },
+                    component: ArticleCreate
+                },
+                {
+                    path: '/articles/:slug/edit',
+                    name: 'ArticleEdit',
+                    meta: {
+                        requireAuth: true
+                    },
+                    component: ArticleEdit
+                },
             ]
         },
         {
