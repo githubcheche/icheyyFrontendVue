@@ -26,34 +26,34 @@
             </div>
           </div>
           <div class="head-right">
-            <!--<div class="dropdown" v-if="auth.check()">-->
+            <div class="dropdown" v-if="auth.check()">
               <!--<span><img :src="auth.user.avatar" alt=""></span>-->
-              <!--<p class="dropbtn">{{auth.user.name}}-->
-                <!--<span>-->
-                  <!--<i class="fa fa-caret-down"></i>-->
-                <!--</span>-->
-              <!--</p>-->
-              <!--<div class="dropdown-content">-->
-                <!--<router-link :to="{name: 'UserArticles', params: {slug: auth.id}}">-->
-                  <!--<span>-->
-                    <!--<i class="fa fa-user"></i>-->
-                  <!--</span>-->
-                  <!--<span style="padding-left: 20px">个人中心</span>-->
-                <!--</router-link>-->
-                <!--<router-link :to="{name: 'UserArticles', params: {slug: auth.id}}">-->
-                  <!--<span>-->
-                    <!--<i class="fa fa-gear"></i>-->
-                  <!--</span>-->
-                  <!--<span style="padding-left: 20px">编辑资料</span>-->
-                <!--</router-link>-->
-                <!--<a @click.prevent="logOut()">-->
-                  <!--<span>-->
-                    <!--<i class="fa fa-sign-out"></i>-->
-                  <!--</span>-->
-                  <!--<span style="padding-left: 20px">退出</span>-->
-                <!--</a>-->
-              <!--</div>-->
-            <!--</div>-->
+              <p class="dropbtn">{{auth.user.name}}
+                <span>
+                  <i class="fa fa-caret-down"></i>
+                </span>
+              </p>
+              <div class="dropdown-content">
+                <router-link :to="{name: 'UserArticles', params: {slug: auth.id}}">
+                  <span>
+                    <i class="fa fa-user"></i>
+                  </span>
+                  <span style="padding-left: 20px">个人中心</span>
+                </router-link>
+                <router-link :to="{name: 'UserArticles', params: {slug: auth.id}}">
+                  <span>
+                    <i class="fa fa-gear"></i>
+                  </span>
+                  <span style="padding-left: 20px">编辑资料</span>
+                </router-link>
+                <a @click.prevent="logOut()">
+                  <span>
+                    <i class="fa fa-sign-out"></i>
+                  </span>
+                  <span style="padding-left: 20px">退出</span>
+                </a>
+              </div>
+            </div>
             <div v-if="!auth.check()" class="head-nav-login">
               <router-link class="this-login" to="/user/register">
                 注册
@@ -64,15 +64,15 @@
                 登录
               </router-link>
             </div>
-            <!--<div style="float: right; padding-top: 2px">-->
-              <!--<router-link v-if="auth.check()" to="/" style="margin-right: 20px" title="您目前没有新消息">-->
-                <!--<i class="fa fa-bell-o"></i>-->
-                <!--&lt;!&ndash; <span class="label label-warning">{{msgNum}}</span> &ndash;&gt;-->
-              <!--</router-link>-->
-              <!--<router-link to="/article/create" id="btn-topic">-->
-                <!--<i class="fa fa-pencil"></i> 写文章-->
-              <!--</router-link>-->
-            <!--</div>-->
+            <div style="float: right; padding-top: 2px">
+              <router-link v-if="auth.check()" to="/" style="margin-right: 20px" title="您目前没有新消息">
+                <i class="fa fa-bell-o"></i>
+                 <!--<span class="label label-warning">{{msgNum}}</span> -->
+              </router-link>
+              <router-link to="/article/create" id="btn-topic">
+                <i class="fa fa-pencil"></i> 写文章
+              </router-link>
+            </div>
           </div>
         </div>
       </el-col>

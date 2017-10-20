@@ -11,6 +11,7 @@ const Error404 = resolve => require(['../views/error/404'], resolve)
 Vue.use(Router)
 
 export default new Router({
+    // mode: 'history',
     routes: [
         {
             path: '/user/login',
