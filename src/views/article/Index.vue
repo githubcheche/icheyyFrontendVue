@@ -68,10 +68,10 @@ export default {
   components: {
     HotTopics
   },
-//  beforeRouteUpdate(to, from, next) {
-//    this.tagName = to.query;
-//    next();
-//  },
+  beforeRouteUpdate(to, from, next) {
+    this.tagName = to.query;
+    next();
+  },
 //  beforeRouteLeave(to, from, next) {
 //    this.tagName = to.query;
 //    next();
@@ -123,11 +123,11 @@ export default {
       this.get_articles(page);
     },
   },
-//  watch: {
-//    tagName: function() {
-//      this.get_articles(undefined);
-//    }
-//  }
+  watch: {
+    tagName: function() {
+      this.get_articles(undefined);
+    }
+  }
 }
 </script>
 

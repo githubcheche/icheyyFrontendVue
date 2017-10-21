@@ -10,7 +10,8 @@ const ArticleShow = resolve => require(['../views/article/Show'], resolve)
 const ArticleCreate = resolve => require(['../views/article/Create'], resolve)
 const ArticleEdit = resolve => require(['../views/article/Edit'], resolve)
 
-
+const About = resolve => require(['../views/other/About'], resolve)
+const Payment = resolve => require(['../views/other/Payment'], resolve)
 const Error404 = resolve => require(['../views/error/404'], resolve)
 
 Vue.use(Router)
@@ -61,6 +62,16 @@ export default new Router({
                         requireAuth: true
                     },
                     component: ArticleEdit
+                },
+                {
+                    path: '/about',
+                    name: 'About',
+                    component: About
+                },
+                {
+                    path: '/payment',
+                    name: 'Payment',
+                    component: Payment
                 },
             ]
         },
