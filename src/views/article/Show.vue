@@ -31,7 +31,7 @@
             </div>
           </div>
           <div class="article-body">
-            <vue-markdown class="markdown-body">{{article.body}}</vue-markdown>
+            <div class="markdown-body" v-html="markdownString"></div>
           </div>
           <div class="article-like">
             <el-button type="submit" id="btn-like" @click.prevent="click_like()">
@@ -123,17 +123,16 @@
 
 <script>
 import api from '../../api'
-import VueMarkdown from 'vue-markdown'
 import { mapState } from 'vuex'
 import { Loading } from 'element-ui'
 import HotTopics from '../../components/HotTopics'
+import Marked from 'marked'
 //import Popup from '../../components/Popup'
 //import ChildComment from '../../components/Comment'
 
 export default {
   components: {
     HotTopics,
-    VueMarkdown,
 //    Popup,
 //    ChildComment
   },
@@ -144,7 +143,8 @@ export default {
       follow: false,
       comment: '',
       comments: '',
-      showPreview: false
+      showPreview: false,
+      markdownString:'',
     }
   },
   computed: mapState({
@@ -152,6 +152,12 @@ export default {
   }),
   mounted() {
     this.reload();
+      Marked.setOptions({
+          highlight: function (code) {
+              return require('highlight.js').highlightAuto(code).value;
+          }
+      });
+
   },
   created() {
 //    this.reload();
@@ -165,6 +171,7 @@ export default {
       api.get_article(this.$route.params.slug).then((res) => {
         if (res.data.status == 1) {
           this.article = res.data.data;
+          this.markdownString = Marked(this.article.body);
           if (this.auth.check()) {
 //            api.is_follow_or_not(this.article.user.id).then((res) => {
 //              if (res.data.status == 1) {
@@ -243,6 +250,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '../../../static/css/markdown.css';
+@import '~highlight.js/styles/default.css';
 .article {
   margin-top: 40px;
   p {
