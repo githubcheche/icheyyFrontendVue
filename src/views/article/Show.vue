@@ -1,5 +1,5 @@
 <template>
-  <div  v-if="article">
+  <div v-if="article">
     <el-row :gutter="25">
       <el-col :span="10" :offset="5">
         <div class="article">
@@ -70,9 +70,11 @@
               </div>
               <div class="comment-author-detail">
                 <div>
-                  <router-link style="padding-top: 1px; font-size: 16px; color: #555" :to="{name: 'UserArticles', params: {slug: comment.user_id}}">
+                  <router-link style="padding-top: 1px; font-size: 16px; color: #555"
+                               :to="{name: 'UserArticles', params: {slug: comment.user_id}}">
                     {{comment.user.name}}&nbsp;
-                  </router-link><br>
+                  </router-link>
+                  <br>
                   <span># {{index + 1}} · 评论于 {{ comment.created_at }}</span>
                 </div>
               </div>
@@ -122,321 +124,322 @@
 </template>
 
 <script>
-import api from '../../api'
-import { mapState } from 'vuex'
-import { Loading } from 'element-ui'
-import HotTopics from '../../components/HotTopics'
-import Marked from 'marked'
-//import Popup from '../../components/Popup'
-//import ChildComment from '../../components/Comment'
+  import api from '../../api'
+  import {mapState} from 'vuex'
+  import {Loading} from 'element-ui'
+  import HotTopics from '../../components/HotTopics'
+  import Marked from 'marked'
+  //import Popup from '../../components/Popup'
+  //import ChildComment from '../../components/Comment'
 
-export default {
-  components: {
-    HotTopics,
+  export default {
+    components: {
+      HotTopics,
 //    Popup,
 //    ChildComment
-  },
-  data() {
-    return {
-      article: '',
-      like: false,
-      follow: false,
-      comment: '',
-      comments: '',
-      showPreview: false,
-      markdownString:'',
-    }
-  },
-  computed: mapState({
-    auth: state => state.account.auth,
-  }),
-  mounted() {
-    this.reload();
+    },
+    data() {
+      return {
+        article: '',
+        like: false,
+        follow: false,
+        comment: '',
+        comments: '',
+        showPreview: false,
+        markdownString: '',
+      }
+    },
+    computed: mapState({
+      auth: state => state.account.auth,
+    }),
+    mounted() {
+      this.reload();
       Marked.setOptions({
-          highlight: function (code) {
-              return require('highlight.js').highlightAuto(code).value;
-          }
+        highlight: function (code) {
+          return require('highlight.js').highlightAuto(code).value;
+        }
       });
 
-  },
-  created() {
+    },
+    created() {
 //    this.reload();
-  },
-  methods: {
-    reload() {
-      let options = {
-        target: document.querySelector('#app')
-      };
-      let loadingInstance = Loading.service(options);
-      api.get_article(this.$route.params.slug).then((res) => {
-        if (res.data.status == 1) {
-          this.article = res.data.data;
-          this.markdownString = Marked(this.article.body);
-          if (this.auth.check()) {
+    },
+    methods: {
+      reload() {
+        let options = {
+          target: document.querySelector('#app')
+        };
+        let loadingInstance = Loading.service(options);
+        api.get_article(this.$route.params.slug).then((res) => {
+          if (res.data.status == 1) {
+            this.article = res.data.data;
+            this.markdownString = Marked(this.article.body);
+            if (this.auth.check()) {
 //            api.is_follow_or_not(this.article.user.id).then((res) => {
 //              if (res.data.status == 1) {
 //                this.follow = res.data.data.followed;
 //              }
 //            });
+            }
+            loadingInstance.close();
           }
-          loadingInstance.close();
-        }
 //        api.get_comments(this.$route.params.slug).then((res) => {
 //          this.comments = res.data.data;
 //        });
-      });
-      if (this.auth.check()) {
+        });
+        if (this.auth.check()) {
 //        api.is_like_or_not(this.$route.params.slug).then((res) => {
 //          if (res.data.status == 1) {
 //            this.like = res.data.data.liked;
 //          }
 //        });
-      }
-    },
-    click_like() {
-      if (this.auth.check()) {
-        api.like(this.$route.params.slug).then((res) => {
-          if (res.data.status == 1) {
-            this.like = res.data.data.liked;
-          }
-        });
-      } else {
-        this.showPreview = true;
-      }
-    },
-    click_follow() {
-      if (this.auth.check()) {
-        api.follow(this.article.user.id).then((res) => {
-          if (res.data.status == 1) {
-            this.follow = res.data.data.followed;
-            this.message();
-          }
-        });
-      } else {
-        this.showPreview = true;
-      }
-    },
-    submit() {
+        }
+      },
+      click_like() {
+        if (this.auth.check()) {
+          api.like(this.$route.params.slug).then((res) => {
+            if (res.data.status == 1) {
+              this.like = res.data.data.liked;
+            }
+          });
+        } else {
+          this.showPreview = true;
+        }
+      },
+      click_follow() {
+        if (this.auth.check()) {
+          api.follow(this.article.user.id).then((res) => {
+            if (res.data.status == 1) {
+              this.follow = res.data.data.followed;
+              this.message();
+            }
+          });
+        } else {
+          this.showPreview = true;
+        }
+      },
+      submit() {
 //      api.create_comment({ article_id: this.article.id, parent_id: 0, body: this.comment }).then((res) => {
 //        if (res.data.status == 1) {
 //          this.comments.push(res.data.data);
 //        }
 //      });
+      },
+      closePreview() {
+        this.showPreview = false;
+      },
+      message() {
+        if (this.follow) {
+          this.$message({
+            message: '已关注',
+            type: 'success'
+          });
+        } else {
+          this.$message({
+            message: '已取消关注',
+            type: 'success'
+          });
+        }
+      }
     },
-    closePreview() {
-      this.showPreview = false;
-    },
-    message() {
-      if (this.follow) {
-        this.$message({
-          message: '已关注',
-          type: 'success'
-        });
-      } else {
-        this.$message({
-          message: '已取消关注',
-          type: 'success'
-        });
+    watch: {
+      '$route'(to, from) {
+        this.reload();
       }
     }
-  },
-  watch: {
-    '$route'(to, from) {
-      this.reload();
-    }
   }
-}
 </script>
 
 <style lang="scss" scoped>
-@import '../../../static/css/markdown.css';
-@import '~highlight.js/styles/default.css';
-.article {
-  margin-top: 40px;
-  p {
-    font-size: 30px;
-    font-weight: bold;
-    float: left;
-    margin-bottom: 10px;
-  }
-  a {
-    color: tomato;
-  }
-  .article-edit {
-    padding-top: 5px;
-  }
-}
+  @import '../../../static/css/markdown.css';
+  @import '~highlight.js/styles/default.css';
 
-.article-author {
-  clear: both;
-  margin-top: 30px;
-  position: relative;
-  img {
-    position: absolute;
-    width: 48px;
-    border: 1px solid #aaa;
-    border-radius: 100px;
-    margin-top: 5px;
+  .article {
+    margin-top: 40px;
+    p {
+      font-size: 30px;
+      font-weight: bold;
+      float: left;
+      margin-bottom: 10px;
+    }
+    a {
+      color: tomato;
+    }
+    .article-edit {
+      padding-top: 5px;
+    }
   }
-  .article-author-detail {
-    padding-top: 10px;
-    padding-left: 65px;
-    .article-detail {
+
+  .article-author {
+    clear: both;
+    margin-top: 30px;
+    position: relative;
+    img {
+      position: absolute;
+      width: 48px;
+      border: 1px solid #aaa;
+      border-radius: 100px;
+      margin-top: 5px;
+    }
+    .article-author-detail {
+      padding-top: 10px;
+      padding-left: 65px;
+      .article-detail {
+        padding-top: 6px;
+        color: #999;
+        font-size: 13px;
+        span {
+          padding-right: 5px;
+        }
+      }
+    }
+  }
+
+  .article-body {
+    padding-top: 35px;
+    line-height: 25px;
+  }
+
+  .comment-author {
+    clear: both;
+    margin-top: 15px;
+    position: relative;
+    img {
+      position: absolute;
+      width: 36px;
+      border: 1px solid #aaa;
+      border-radius: 100px;
+      margin-top: 5px;
+    }
+    .comment-author-detail {
       padding-top: 6px;
+      padding-left: 50px;
       color: #999;
       font-size: 13px;
-      span {
-        padding-right: 5px;
-      }
+    }
+    .comment-detail {
+      padding: 20px 0 10px;
+      color: #555;
     }
   }
-}
 
-.article-body {
-  padding-top: 35px;
-  line-height: 25px;
-}
-
-.comment-author {
-  clear: both;
-  margin-top: 15px;
-  position: relative;
-  img {
-    position: absolute;
-    width: 36px;
-    border: 1px solid #aaa;
-    border-radius: 100px;
-    margin-top: 5px;
-  }
-  .comment-author-detail {
-    padding-top: 6px;
-    padding-left: 50px;
-    color: #999;
+  #btn-topic {
+    border-radius: 4px;
     font-size: 13px;
+    border: 1px solid orangered;
+    padding: 2px 2px 2px 5px;
+    margin-right: 12px;
+    font-weight: 500;
+    color: orangered;
   }
-  .comment-detail {
-    padding: 20px 0 10px;
-    color: #555;
-  }
-}
 
-#btn-topic {
-  border-radius: 4px;
-  font-size: 13px;
-  border: 1px solid orangered;
-  padding: 2px 2px 2px 5px;
-  margin-right: 12px;
-  font-weight: 500;
-  color: orangered;
-}
-
-.article-like {
-  padding-top: 70px;
-  #btn-like {
-    background-color: #fff;
-    color: tomato;
-    font-size: 18px;
-    padding: 8px 20px 8px 20px;
-    border-radius: 100px;
-    box-shadow: none;
-    border: 1px solid tomato;
-    cursor: pointer;
-  }
-  #btn-like:hover,
-  #btn-like:focus,
-  #btn-like:active:focus,
-  #btn-like:active {
-    border-radius: 100px;
-    color: #fff;
-    box-shadow: none;
-    background-color: tomato;
-  }
-}
-
-.article-comment {
-  padding-top: 30px;
-  img {
-    position: absolute;
-    width: 36px;
-    border: 1px solid #aaa;
-    border-radius: 100px;
-    margin-top: 5px;
-  }
-  form {
-    padding-top: 8px;
-    padding-left: 55px;
-    button {
-      margin-top: 15px;
-      margin-bottom: 20px;
-      float: right;
-      background-color: #00b5ad;
-      color: #fff;
-      font-size: 17px;
-      padding: 5px 15px 5px 15px;
+  .article-like {
+    padding-top: 70px;
+    #btn-like {
+      background-color: #fff;
+      color: tomato;
+      font-size: 18px;
+      padding: 8px 20px 8px 20px;
       border-radius: 100px;
       box-shadow: none;
-      border: 1px solid #00b5ad;
-      &:hover {
-        color: tomato;
+      border: 1px solid tomato;
+      cursor: pointer;
+    }
+    #btn-like:hover,
+    #btn-like:focus,
+    #btn-like:active:focus,
+    #btn-like:active {
+      border-radius: 100px;
+      color: #fff;
+      box-shadow: none;
+      background-color: tomato;
+    }
+  }
+
+  .article-comment {
+    padding-top: 30px;
+    img {
+      position: absolute;
+      width: 36px;
+      border: 1px solid #aaa;
+      border-radius: 100px;
+      margin-top: 5px;
+    }
+    form {
+      padding-top: 8px;
+      padding-left: 55px;
+      button {
+        margin-top: 15px;
+        margin-bottom: 20px;
+        float: right;
+        background-color: #00b5ad;
+        color: #fff;
+        font-size: 17px;
+        padding: 5px 15px 5px 15px;
+        border-radius: 100px;
         box-shadow: none;
-        background-color: #fff;
-        border: 1px solid tomato;
+        border: 1px solid #00b5ad;
+        &:hover {
+          color: tomato;
+          box-shadow: none;
+          background-color: #fff;
+          border: 1px solid tomato;
+        }
       }
     }
   }
-}
 
-.article-login {
-  margin: 40px 0 40px;
-  padding-top: 40px;
-  border: 1px dashed #00b5ad;
-  width: 100%;
-  height: 80px;
-  border-radius: 4px;
-  position: relative;
-  a {
-    position: absolute;
-    font-size: smaller;
-    left: 40%;
+  .article-login {
+    margin: 40px 0 40px;
+    padding-top: 40px;
+    border: 1px dashed #00b5ad;
+    width: 100%;
+    height: 80px;
+    border-radius: 4px;
+    position: relative;
+    a {
+      position: absolute;
+      font-size: smaller;
+      left: 40%;
+    }
   }
-}
 
-.sidebar-author {
-  text-align: center;
-  margin-top: 40px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  p {
-    padding: 8px 0 8px 0;
+  .sidebar-author {
+    text-align: center;
+    margin-top: 40px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    p {
+      padding: 8px 0 8px 0;
+      font-size: 15px;
+    }
+    img {
+      width: 100px;
+      border: 1px solid #aaa;
+      border-radius: 100px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+    h2 {
+      color: #00b5ad;
+    }
+  }
+
+  .btn-define {
+    width: 90%;
+    margin: 15px 0 15px;
+    background-color: #00b5ad;
+    border-radius: 5px;
+    color: #fff;
     font-size: 15px;
+    font-weight: bold;
+    border-color: #f1f1f1;
+    box-shadow: none;
   }
-  img {
-    width: 100px;
-    border: 1px solid #aaa;
-    border-radius: 100px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-  }
-  h2 {
-    color: #00b5ad;
-  }
-}
 
-.btn-define {
-  width: 90%;
-  margin: 15px 0 15px;
-  background-color: #00b5ad;
-  border-radius: 5px;
-  color: #fff;
-  font-size: 15px;
-  font-weight: bold;
-  border-color: #f1f1f1;
-  box-shadow: none;
-}
-
-.btn-define:hover,
-.btn-define:active {
-  background-color: #169e98;
-  box-shadow: none;
-}
+  .btn-define:hover,
+  .btn-define:active {
+    background-color: #169e98;
+    box-shadow: none;
+  }
 </style>

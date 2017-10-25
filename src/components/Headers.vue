@@ -67,9 +67,9 @@
             <div style="float: right; padding-top: 2px">
               <router-link v-if="auth.check()" to="/" style="margin-right: 20px" title="您目前没有新消息">
                 <i class="fa fa-bell-o"></i>
-                 <!--<span class="label label-warning">{{msgNum}}</span> -->
+                <!--<span class="label label-warning">{{msgNum}}</span> -->
               </router-link>
-              <router-link to="/article/create" id="btn-topic">
+              <router-link v-if="auth.check()" to="/article/create" id="btn-topic">
                 <i class="fa fa-pencil"></i> 写文章
               </router-link>
             </div>
@@ -81,17 +81,17 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+  import {mapState} from 'vuex';
 
-export default {
-  computed: mapState({
-    auth: state => state.account.auth,
-  }),
-  mounted() {
-    //this.websocket();
-  },
-  methods: {
-    websocket() {
+  export default {
+    computed: mapState({
+      auth: state => state.account.auth,
+    }),
+    mounted() {
+      //this.websocket();
+    },
+    methods: {
+      websocket() {
 //      var ws = new WebSocket(`ws://115.28.170.217:9501?uid=1`);
 //      var _self = this;
 //      ws.onopen = function(evt) {
@@ -117,170 +117,172 @@ export default {
 //        console.log(3);
 //        _self.loadMsg = 2;;
 //      }
-    },
-    logOut() {
-      this.$store.dispatch('accountLogoutSubmit').then(
-        res => { this.$router.push('/') }
-      );
-    }
-  }
-}
-</script>
-
-<style lang="scss" scoped>
-.header {
-  border-bottom: #ddd solid 1px;
-}
-
-.head-left {
-  line-height: 50px;
-  .head-nav {
-    padding-top: 1px;
-    float: left;
-    padding-left: 20px;
-    color: #555;
-    .head-link {
-      color: #555;
-      &:hover {
-        color: #00b5ad;
-        border-bottom: 1px solid #00b5ad;
-        margin-bottom: -1px;
+      },
+      logOut() {
+        this.$store.dispatch('accountLogoutSubmit').then(
+          res => {
+            this.$router.push('/')
+          }
+        );
       }
     }
   }
-}
+</script>
 
-.head-right {
-  line-height: 50px;
-  .head-nav-login {
-    padding-top: 1px;
-    padding-left: 30px;
-    float: right;
+<style lang="scss" scoped>
+  .header {
+    border-bottom: #ddd solid 1px;
   }
-}
 
-.icon {
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 25px;
-  text-align: left;
-}
+  .head-left {
+    line-height: 50px;
+    .head-nav {
+      padding-top: 1px;
+      float: left;
+      padding-left: 20px;
+      color: #555;
+      .head-link {
+        color: #555;
+        &:hover {
+          color: #00b5ad;
+          border-bottom: 1px solid #00b5ad;
+          margin-bottom: -1px;
+        }
+      }
+    }
+  }
 
-.bg-purple-dark {
-  background: #fff;
-}
+  .head-right {
+    line-height: 50px;
+    .head-nav-login {
+      padding-top: 1px;
+      padding-left: 30px;
+      float: right;
+    }
+  }
 
-.grid-content {
-  min-height: 50px;
-}
+  .icon {
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 25px;
+    text-align: left;
+  }
 
-.this-login {
-  color: #555;
-  font-weight: 600;
-}
+  .bg-purple-dark {
+    background: #fff;
+  }
 
-.this-login:hover {
-  color: #00b5ad;
-  border-bottom: 2px solid #00b5ad;
-  margin-bottom: -2px;
-}
+  .grid-content {
+    min-height: 50px;
+  }
 
-.search-input {
-  background-repeat: no-repeat;
-  background-position: 9px;
-  background-color: #f1f1f1;
-  padding-left: 25px;
-  border: 0px solid #c6c6c6;
-  box-shadow: none;
-  transition: all 0.15s ease-in 0.1s;
-  margin-top: 1px;
-  height: 35px;
-  width: 200px;
-  border-radius: 100px;
-}
+  .this-login {
+    color: #555;
+    font-weight: 600;
+  }
 
-.search-input:focus,
-.search-input:hover,
-.search-input:active {
-  border-radius: 100px;
-  box-shadow: none;
-  border: 0px solid #c6c6c6;
-  background: no-repeat 0 0 scroll #f1f1f1;
-  border: none;
-  outline: medium;
-}
+  .this-login:hover {
+    color: #00b5ad;
+    border-bottom: 2px solid #00b5ad;
+    margin-bottom: -2px;
+  }
 
-.dropbtn {
-  float: right;
-  color: #555;
-  font-size: 16px;
-  font-weight: bold;
-  border: none;
-  cursor: pointer;
-  padding-left: 50px;
-}
+  .search-input {
+    background-repeat: no-repeat;
+    background-position: 9px;
+    background-color: #f1f1f1;
+    padding-left: 25px;
+    border: 0px solid #c6c6c6;
+    box-shadow: none;
+    transition: all 0.15s ease-in 0.1s;
+    margin-top: 1px;
+    height: 35px;
+    width: 200px;
+    border-radius: 100px;
+  }
 
-.dropdown {
-  padding-left: 20px;
-  float: right;
-  position: relative;
-  display: inline-block;
-}
+  .search-input:focus,
+  .search-input:hover,
+  .search-input:active {
+    border-radius: 100px;
+    box-shadow: none;
+    border: 0px solid #c6c6c6;
+    background: no-repeat 0 0 scroll #f1f1f1;
+    border: none;
+    outline: medium;
+  }
 
-.dropdown-content {
-  z-index: 1;
-  margin-top: 50px;
-  font-size: 15px;
-  display: none;
-  position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2);
-}
+  .dropbtn {
+    float: right;
+    color: #555;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    padding-left: 50px;
+  }
 
-.dropdown-content a {
-  padding-left: 30px;
-  color: black;
-  text-decoration: none;
-  display: block;
-  border: 1px solid #eee;
-}
+  .dropdown {
+    padding-left: 20px;
+    float: right;
+    position: relative;
+    display: inline-block;
+  }
 
-.dropdown-content a:hover {
-  background-color: #f1f1f1;
-  color: #00b5ad;
-}
+  .dropdown-content {
+    z-index: 1;
+    margin-top: 50px;
+    font-size: 15px;
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.2);
+  }
 
-.dropdown:hover .dropdown-content {
-  display: block;
-}
+  .dropdown-content a {
+    padding-left: 30px;
+    color: black;
+    text-decoration: none;
+    display: block;
+    border: 1px solid #eee;
+  }
 
-.dropdown:hover .dropbtn {
-  background-color: #fff;
-}
+  .dropdown-content a:hover {
+    background-color: #f1f1f1;
+    color: #00b5ad;
+  }
 
-img {
-  position: absolute;
-  width: 40px;
-  border: 1px solid #aaa;
-  border-radius: 100px;
-  margin-top: 5px;
-}
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
 
-#btn-topic {
-  background-color: tomato;
-  font-size: 16px;
-  padding: 10px 20px 10px 20px;
-  border-radius: 100px;
-  color: #fff;
-}
+  .dropdown:hover .dropbtn {
+    background-color: #fff;
+  }
 
-#btn-topic:hover {
-  color: #00b5ad;
-  background-color: #fff;
-  border-radius: 4px;
-  border: 1px solid #00b5ad;
-  box-shadow: none;
-  text-decoration: none;
-}
+  img {
+    position: absolute;
+    width: 40px;
+    border: 1px solid #aaa;
+    border-radius: 100px;
+    margin-top: 5px;
+  }
+
+  #btn-topic {
+    background-color: tomato;
+    font-size: 16px;
+    padding: 10px 20px 10px 20px;
+    border-radius: 100px;
+    color: #fff;
+  }
+
+  #btn-topic:hover {
+    color: #00b5ad;
+    background-color: #fff;
+    border-radius: 4px;
+    border: 1px solid #00b5ad;
+    box-shadow: none;
+    text-decoration: none;
+  }
 </style>
