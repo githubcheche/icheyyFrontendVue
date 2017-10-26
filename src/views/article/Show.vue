@@ -160,6 +160,15 @@
         }
       });
 
+//      setTimeout(() => {
+//        let codes = document.getElementsByTagName("code");
+//        for (let item in codes) {
+//          if(!isNaN(parseInt(item))) {
+//            codes[item].className += ' hljs';
+//          }
+//        }
+//      }, 300);
+
     },
     created() {
 //    this.reload();
@@ -174,6 +183,7 @@
           if (res.data.status == 1) {
             this.article = res.data.data;
             this.markdownString = Marked(this.article.body);
+
             if (this.auth.check()) {
 //            api.is_follow_or_not(this.article.user.id).then((res) => {
 //              if (res.data.status == 1) {
@@ -252,7 +262,8 @@
 
 <style lang="scss" scoped>
   @import '../../../static/css/markdown.css';
-  @import '~highlight.js/styles/default.css';
+  @import '~highlight.js/styles/monokai.css';
+  /*@import '~highlight.js/styles/monokai-sublime.css';*/
 
   .article {
     margin-top: 40px;
@@ -442,4 +453,6 @@
     background-color: #169e98;
     box-shadow: none;
   }
+
+
 </style>
