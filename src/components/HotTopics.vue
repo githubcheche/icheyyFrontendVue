@@ -43,7 +43,8 @@ export default {
         this.tags = res.data.data;
       }
     });
-  }
+  },
+
 }
 </script>
 

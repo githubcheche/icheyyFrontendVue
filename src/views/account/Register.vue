@@ -26,12 +26,12 @@
             <el-form-item prop="password_confirmation" label="确认密码：">
               <el-input type="password" placeholder="请再次输入密码" v-model="params.password_confirmation"></el-input>
             </el-form-item>
-            <!--<div class="login-failure" v-if="failure">-->
-              <!--<div class="header">{{failure.message}}</div>-->
-              <!--<ul class="list">-->
-                <!--<li v-for="error in failure.data">{{error[0]}}</li>-->
-              <!--</ul>-->
-            <!--</div>-->
+            <div class="login-failure" v-if="failure">
+              <div class="header">{{failure.message}}</div>
+              <ul class="list">
+                <li v-for="error in failure.data">{{error[0]}}</li>
+              </ul>
+            </div>
             <div class="login-btn">
               <el-button class="btn-define" @click="submit()">注 册</el-button>
             </div>
@@ -46,8 +46,8 @@
 </template>
 
 <script>
-//import api from '../../api';
-//import { mapState, mapMutations } from 'vuex';
+import api from '../../api';
+import { mapState, mapMutations } from 'vuex';
 import Headers from '../../components/Headers';
 
 export default {
@@ -65,27 +65,27 @@ export default {
       }
     };
   },
-//  computed: mapState({
-//    success: state => state.account.register.success,
-//    failure: state => state.account.register.failure,
-//  }),
+  computed: mapState({
+    success: state => state.account.register.success,
+    failure: state => state.account.register.failure,
+  }),
   methods: {
     submit() {
-//      this.$store.dispatch('accountRegisterSubmit', this.params);
+      this.$store.dispatch('accountRegisterSubmit', this.params);
     },
     successWatcher(val, oldVal) {
-//      if (val && !oldVal) {
-//        this.message();
-//        let self = this;
-//        setTimeout(function() {
-//          self.$router.push('/');
-//        }, 2000);
-//      }
+      if (val && !oldVal) {
+        this.message();//提示注册成功
+        setTimeout(() => {
+          this.$router.push('/');//2s后跳转到首页
+        }, 2000);
+      }
     },
     message() {
+      //element-ui提示组件
       this.$notify.success({
         title: '注册成功',
-        message: '感谢您支持 LaraVue，请先到前往邮箱激活账号',
+        message: '感谢您支持 Cheyy小镇，稍后请登录您的账号',
         offset: 100
       });
     },
@@ -93,9 +93,9 @@ export default {
 //      window.open('https://api.laravue.org/github');
 //    }
   },
-//  watch: {
-//    success: 'successWatcher',
-//  }
+  watch: {
+    success: 'successWatcher',
+  }
 }
 </script>
 

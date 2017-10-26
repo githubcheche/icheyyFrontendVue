@@ -43,7 +43,7 @@
         </div>
       </el-col>
       <el-col :span="4" style="margin-top: 20px;">
-        <hot-topics></hot-topics>
+          <hot-topics></hot-topics>
       </el-col>
     </el-row>
   </div>
@@ -68,14 +68,19 @@ export default {
   components: {
     HotTopics
   },
+  beforeRouteEnter(to, from, next) {
+    console.log('beforeRouteEnter');
+    next(vm => {
+      // 通过 `vm` 访问组件实例
+      vm.tagName = to.query;
+    })
+
+  },
   beforeRouteUpdate(to, from, next) {
+    console.log('beforeRouteUpdate');
     this.tagName = to.query;
     next();
   },
-//  beforeRouteLeave(to, from, next) {
-//    this.tagName = to.query;
-//    next();
-//  },
   mounted() {
     const validate_user = this.$route.query.validate;
     if (validate_user) {
@@ -89,7 +94,6 @@ export default {
       target: document.querySelector('#app')
     };
     loadingInstance = Loading.service(options);
-    this.get_articles(undefined);
   },
   methods: {
     get_articles(val) {

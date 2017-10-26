@@ -2,21 +2,11 @@
   <div class="wrapper">
     <div class="error-spacer"></div>
     <div role="main" class="main">
-      <h1>I think we're lost.</h1>
-
-      <h2>Server Error: 404 (Not Found)</h2>
-
-      <hr>
-
-      <h3>What does this mean?</h3>
+      <h1>你已在Cheyy小镇中迷失了方向</h1>
 
       <p>
-        We couldn't find the page you requested on our servers. We're really sorry about that. It's our fault, not yours. We'll work hard to get this page back online as soon as possible.
-      </p>
-
-      <p>
-        Perhaps you would like to go to our
-        <a href="/">home page</a>?
+        点击这里回到
+        <router-link to="/" >主干道上</router-link>
       </p>
     </div>
   </div>
@@ -44,6 +34,7 @@ body {
 
 .main {
   overflow: hidden;
+  color: #22863a;
 }
 
 .error-spacer {

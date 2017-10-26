@@ -174,17 +174,23 @@
 //    this.reload();
     },
     methods: {
+      /**
+       * 重载文章
+       * */
       reload() {
+        // 加载进度条
         let options = {
           target: document.querySelector('#app')
         };
         let loadingInstance = Loading.service(options);
+        // 获取路由参数指定文章
         api.get_article(this.$route.params.slug).then((res) => {
           if (res.data.status == 1) {
             this.article = res.data.data;
             this.markdownString = Marked(this.article.body);
 
             if (this.auth.check()) {
+              // 获取登入用户是否关注本文章作者
 //            api.is_follow_or_not(this.article.user.id).then((res) => {
 //              if (res.data.status == 1) {
 //                this.follow = res.data.data.followed;
@@ -198,6 +204,7 @@
 //        });
         });
         if (this.auth.check()) {
+          // 获取登入用户是否点赞本文章
 //        api.is_like_or_not(this.$route.params.slug).then((res) => {
 //          if (res.data.status == 1) {
 //            this.like = res.data.data.liked;
@@ -205,6 +212,9 @@
 //        });
         }
       },
+      /**
+       * 点赞操作
+       */
       click_like() {
         if (this.auth.check()) {
           api.like(this.$route.params.slug).then((res) => {
@@ -216,6 +226,9 @@
           this.showPreview = true;
         }
       },
+      /**
+       * 关注作者操作
+       */
       click_follow() {
         if (this.auth.check()) {
           api.follow(this.article.user.id).then((res) => {
@@ -228,6 +241,9 @@
           this.showPreview = true;
         }
       },
+      /**
+       * 提交评论操作
+       */
       submit() {
 //      api.create_comment({ article_id: this.article.id, parent_id: 0, body: this.comment }).then((res) => {
 //        if (res.data.status == 1) {
