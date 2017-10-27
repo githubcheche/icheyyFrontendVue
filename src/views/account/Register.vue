@@ -60,7 +60,7 @@ export default {
       if (value === '') {
         callback(new Error('请输入密码'));
       } else {
-        if (this.params.password !== '') {
+        if (this.params.password_confirmation !== '') {
           this.$refs.params.validateField('password_confirmation');
         }
         callback();

@@ -13,7 +13,7 @@
           </span>
         </div>
         <div class="ms-login">
-          <el-form :model="params" status-icon :rules="rules"  label-width="68px" class="demo-ruleForm">
+          <el-form :model="params" status-icon :rules="rules"  label-width="68px">
             <el-form-item prop="login" label="账号：">
               <el-input v-model="params.login" placeholder="用户名/邮箱"></el-input>
             </el-form-item>
