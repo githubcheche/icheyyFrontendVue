@@ -13,7 +13,7 @@
           </span>
         </div>
         <div class="ms-login">
-          <el-form ref="params" :model="params" label-width="82px">
+          <el-form ref="params" status-icon :model="params" :rules="rules" label-width="82px">
             <el-form-item label="用户名：" prop="name">
               <el-input v-model="params.name" placeholder="至少4个字符"></el-input>
             </el-form-item>
@@ -21,10 +21,10 @@
               <el-input v-model="params.email" placeholder="请填写真实邮箱"></el-input>
             </el-form-item>
             <el-form-item prop="password" label="密码：">
-              <el-input type="password" placeholder="至少6个字符" v-model="params.password"></el-input>
+              <el-input type="password" placeholder="至少6个字符" v-model="params.password" auto-complete="off"></el-input>
             </el-form-item>
             <el-form-item prop="password_confirmation" label="确认密码：">
-              <el-input type="password" placeholder="请再次输入密码" v-model="params.password_confirmation"></el-input>
+              <el-input type="password" placeholder="请再次输入密码" v-model="params.password_confirmation" auto-complete="off"></el-input>
             </el-form-item>
             <div class="login-failure" v-if="failure">
               <div class="header">{{failure.message}}</div>
@@ -37,7 +37,7 @@
             </div>
           </el-form>
           <!--<div class="pull-center">-->
-            <!--<el-button class="github_login" @click="github_login()">GitHub 账号注册</el-button>-->
+          <!--<el-button class="github_login" @click="github_login()">GitHub 账号注册</el-button>-->
           <!--</div>-->
         </div>
       </div>
@@ -56,12 +56,47 @@ export default {
     Headers
   },
   data() {
+    var validatePass = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请输入密码'));
+      } else {
+        if (this.params.password !== '') {
+          this.$refs.params.validateField('password_confirmation');
+        }
+        callback();
+      }
+    };
+    var validatePass2 = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('请再次输入密码'));
+      } else if (value !== this.params.password) {
+        callback(new Error('两次输入密码不一致!'));
+      } else {
+        callback();
+      }
+    };
     return {
       params: {
         name: '',
         email: '',
         password: '',
         password_confirmation: '',
+      },
+      rules: {
+        name: [
+          { required: true, message: '账户不能为空' },
+          { min: 4, max: 12, message: '长度在 4 到 12 个字符', trigger: 'blur' }
+        ],
+        email: [
+          { required: true, message: '请输入邮箱地址', trigger: 'blur' },
+          { type: 'email', message: '请输入正确的邮箱地址', trigger: 'blur,change' }
+        ],
+        password: [
+          { validator: validatePass, trigger: 'blur' }
+        ],
+        password_confirmation: [
+          { validator: validatePass2, trigger: 'blur' }
+        ],
       }
     };
   },
@@ -70,14 +105,16 @@ export default {
     failure: state => state.account.register.failure,
   }),
   methods: {
+    // 注册
     submit() {
       this.$store.dispatch('accountRegisterSubmit', this.params);
     },
+    // 注册成功
     successWatcher(val, oldVal) {
       if (val && !oldVal) {
         this.message();//提示注册成功
         setTimeout(() => {
-          this.$router.push('/');//2s后跳转到首页
+          this.$router.push({ name: 'Login' });//2s后跳转到登入界面
         }, 2000);
       }
     },
@@ -89,9 +126,9 @@ export default {
         offset: 100
       });
     },
-//    github_login() {
-//      window.open('https://api.laravue.org/github');
-//    }
+    //    github_login() {
+    //      window.open('https://api.laravue.org/github');
+    //    }
   },
   watch: {
     success: 'successWatcher',

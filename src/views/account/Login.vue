@@ -13,7 +13,7 @@
           </span>
         </div>
         <div class="ms-login">
-          <el-form :model="params" label-width="68px" class="demo-ruleForm">
+          <el-form :model="params" status-icon :rules="rules"  label-width="68px" class="demo-ruleForm">
             <el-form-item prop="login" label="账号：">
               <el-input v-model="params.login" placeholder="用户名/邮箱"></el-input>
             </el-form-item>
@@ -55,6 +55,16 @@ export default {
       params: {
         login: '',
         password: '',
+      },
+      rules: {
+        login: [
+          { required: true, message: '账户不能为空' },
+          { min: 4, max: 12, message: '长度在 4 到 12 个字符' , trigger: 'blur'}
+        ],
+        password: [
+          { required: true, message: '请输入密码' },
+          { min: 6, max: 12, message: '长度在 6 到 12 个字符' , trigger: 'blur'}
+        ]
       }
     };
   },
@@ -63,12 +73,15 @@ export default {
     failure: state => state.account.login.failure,
   }),
   methods: {
+    // 登入事件
     submit() {
       this.$store.dispatch('accountLoginSubmit', this.params);
     },
+    // 成功回调函数
     successWatcher(val, oldVal) {
       if (val && !oldVal) {
-        const redirectUrl = /*this.$route.query.redirect_url ||*/ '/';
+        // this.$router.go(-1);//返回上一页
+        const redirectUrl = this.$route.query.redirect_url || '/';
         this.$router.push(redirectUrl);
       }
     },

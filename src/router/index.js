@@ -23,40 +23,40 @@ const router = new Router({
   // mode: 'history',
   routes: [
     {
-      path: '/user/login',
+      path: '/user/login',//登入
       name: 'Login',
-      component: Login
+      component: Login,
     },
     {
-      path: '/user/register',
+      path: '/user/register',//注册
       name: 'Register',
       component: Register
     },
     {
       path: '/',
       name: 'Common',
-      component: Common,
+      component: Common,// Common模板组件
       children: [
         {
           path: '/',
-          component: ArticleIndex,
+          redirect: { name: 'ArticleIndex' }//重定向到文章列表
         },
         {
           path: '/articles',
           name: 'ArticleIndex',
-          component: ArticleIndex
+          component: ArticleIndex//文章列表
         },
         {
           path: '/articles/:slug',
           name: 'ArticleShow',
-          component: ArticleShow
+          component: ArticleShow//文章详情
         },
         {
           path: '/article/create',
           meta: {
             requireAuth: true//需要检查用户是否登录，详见下面record => record.meta.requireAuth
           },
-          component: ArticleCreate
+          component: ArticleCreate//创建文章
         },
         {
           path: '/articles/:slug/edit',
@@ -64,23 +64,23 @@ const router = new Router({
           meta: {
             requireAuth: true
           },
-          component: ArticleEdit
+          component: ArticleEdit//编辑文章
         },
         {
           path: '/about',
           name: 'About',
-          component: About
+          component: About//关于
         },
         {
           path: '/payment',
           name: 'Payment',
-          component: Payment
+          component: Payment//打赏
         },
       ]
     },
     {
       path: '*',
-      component: Error404,
+      component: Error404,//错误页面
     }
   ]
 });
