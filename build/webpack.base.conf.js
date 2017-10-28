@@ -29,8 +29,8 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.scss$/,
-                loader: 'style-loader!css-loader!sass-loader',
+                // test: /\.scss$/,
+                // loader: 'style-loader!scss-loader!sass-loader',
             },
             {
                 test: /\.vue$/,

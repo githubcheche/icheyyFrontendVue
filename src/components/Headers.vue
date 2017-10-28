@@ -6,8 +6,8 @@
           <div class="head-left">
             <div style="float: left; padding-right: 10px">
               <router-link style="font-size: 25px; font-weight: bold" to="/">
-                <span style="color: orangered">Cheyy</span>
-                <span style="color: #00b5ad">小镇</span>
+                <span class="title-main">Cheyy</span>
+                <span class="title-sub">小镇</span>
               </router-link>
             </div>
             <div class="head-nav">
@@ -130,12 +130,19 @@
 </script>
 
 <style lang="scss" scoped>
+  @import "../common/scss/variable";
   .header {
     border-bottom: #ddd solid 1px;
   }
 
   .head-left {
     line-height: 50px;
+    .title-main {
+      color: $color-theme;
+    }
+    .title-sub {
+      color: $color-sub-theme;
+    }
     .head-nav {
       padding-top: 1px;
       float: left;
