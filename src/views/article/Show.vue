@@ -278,7 +278,7 @@
 
 <style lang="scss" scoped>
   @import '../../../static/css/markdown.css';
-  @import '~highlight.js/styles/monokai.css';
+  @import '~highlight.js/styles/default.css';
   /*@import '~highlight.js/styles/monokai-sublime.css';*/
 
   .article {
