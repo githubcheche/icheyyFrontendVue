@@ -81,7 +81,7 @@
               <div class="comment-detail">
                 {{comment.body}}
               </div>
-              <!--<ChildComment :childComment="comment.id" :article_id="article.id"></ChildComment>-->
+              <ChildComment :childComment="comment.id" :article_id="article.id"></ChildComment>
               <div style="border-bottom: 1px solid #eee; padding-top: 15px"></div>
             </div>
           </div>
@@ -130,13 +130,13 @@
   import HotTopics from '../../components/HotTopics'
   import Marked from 'marked'
   //import Popup from '../../components/Popup'
-  //import ChildComment from '../../components/Comment'
+  import ChildComment from '../../components/ChildComment'
 
   export default {
     components: {
       HotTopics,
 //    Popup,
-//    ChildComment
+      ChildComment
     },
     data() {
       return {
@@ -191,25 +191,26 @@
 
             if (this.auth.check()) {
               // 获取登入用户是否关注本文章作者
-//            api.is_follow_or_not(this.article.user.id).then((res) => {
-//              if (res.data.status == 1) {
-//                this.follow = res.data.data.followed;
-//              }
-//            });
+              api.is_follow_or_not(this.article.user.id).then((res) => {
+                if (res.data.status == 1) {
+                  this.follow = res.data.data.followed;
+                }
+              });
             }
             loadingInstance.close();
           }
-//        api.get_comments(this.$route.params.slug).then((res) => {
-//          this.comments = res.data.data;
-//        });
+          // 获取本文章的所有评论
+          api.get_comments(this.$route.params.slug).then((res) => {
+            this.comments = res.data.data;
+          });
         });
         if (this.auth.check()) {
           // 获取登入用户是否点赞本文章
-//        api.is_like_or_not(this.$route.params.slug).then((res) => {
-//          if (res.data.status == 1) {
-//            this.like = res.data.data.liked;
-//          }
-//        });
+          api.is_like_or_not(this.$route.params.slug).then((res) => {
+            if (res.data.status == 1) {
+              this.like = res.data.data.liked;
+            }
+          });
         }
       },
       /**
@@ -245,11 +246,15 @@
        * 提交评论操作
        */
       submit() {
-//      api.create_comment({ article_id: this.article.id, parent_id: 0, body: this.comment }).then((res) => {
-//        if (res.data.status == 1) {
-//          this.comments.push(res.data.data);
-//        }
-//      });
+        if (this.comment.length == 0)
+          return;
+
+        api.create_comment({article_id: this.article.id, parent_id: 0, body: this.comment}).then((res) => {
+          if (res.data.status == 1) {
+            this.comments.push(res.data.data);
+            this.comment = '';
+          }
+        });
       },
       closePreview() {
         this.showPreview = false;
