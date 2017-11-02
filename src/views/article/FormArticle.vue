@@ -34,7 +34,7 @@
                 class="upload-image"
                 name="image"
                 drag
-                action="http://api.icheyy.top/api/v1/content_image"
+                :action= "upload_url"
                 :headers="{Authorization: getTocken()}"
                 multiple
                 :before-upload="beforeAvatarUpload"
@@ -79,6 +79,7 @@
     props: ['type'],
     data() {
       return {
+        upload_url: this.$http.options.root + '/content_image',
         params: {
           title: '',
           body: '',

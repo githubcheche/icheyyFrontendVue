@@ -40,7 +40,7 @@
                   </span>
                   <span style="padding-left: 20px">个人中心</span>
                 </router-link>
-                <router-link :to="{name: 'UserArticles', params: {slug: auth.id}}">
+                <router-link :to="{name: 'EditUserInfo', params: {slug: auth.id}}">
                   <span>
                     <i class="fa fa-gear"></i>
                   </span>

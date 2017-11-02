@@ -64,6 +64,19 @@ export default {
     ACCOUNT_REGISTER_FAILURE: (state, data) => {//注册失败
       Vue.set(state.register, 'success', false);
       Vue.set(state.register, 'failure', data);
+    },
+    ACCOUNT_AVATAR_UPLOAD: (state, data) => {// 更新头像
+      let user = JSON.parse(localStorage.getItem(AUTH_USER));
+      user.avatar = data;
+      localStorage.removeItem(AUTH_USER);
+      localStorage.setItem(AUTH_USER, JSON.stringify(user));
+    },
+    ACCOUNT_EDIT_USER: (state, data) => {// 用户信息更新
+      let user = JSON.parse(localStorage.getItem(AUTH_USER));
+      user.real_name = data.real_name;
+      user.city = data.city;
+      localStorage.removeItem(AUTH_USER);
+      localStorage.setItem(AUTH_USER, JSON.stringify(user));
     }
   },
   actions: {/////////////以下是对外接口/////////////

@@ -119,7 +119,7 @@
         <hot-topics></hot-topics>
       </el-col>
     </el-row>
-    <!--<popup v-show="showPreview" @closePreview="closePreview"></popup>-->
+    <popup v-show="showPreview" @closePreview="closePreview"></popup>
   </div>
 </template>
 
@@ -129,13 +129,13 @@
   import {Loading} from 'element-ui'
   import HotTopics from '../../components/HotTopics'
   import Marked from 'marked'
-  //import Popup from '../../components/Popup'
+  import Popup from '../../components/Popup'
   import ChildComment from '../../components/ChildComment'
 
   export default {
     components: {
       HotTopics,
-//    Popup,
+      Popup,
       ChildComment
     },
     data() {

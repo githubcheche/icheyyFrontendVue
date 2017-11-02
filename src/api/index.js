@@ -37,6 +37,12 @@ export default {
   logout() {
     return Vue.http.get('user/logout');
   },
+  edit_password(params) {
+    return Vue.http.post('edit_password', params);
+  },
+  edit_user_info(params) {
+    return Vue.http.patch('users/0', params);
+  },
 
   get_user(id) {
     return Vue.http.get('users/' + id);
@@ -46,6 +52,9 @@ export default {
   },
   user_get_replies(id) {
     return Vue.http.get('users/' + id + '/replies');
+  },
+  user_get_likes_articles(id) {
+    return Vue.http.get('users/' + id + '/likes');
   },
 
   get_articles(params) {

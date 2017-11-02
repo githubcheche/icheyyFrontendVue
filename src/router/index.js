@@ -17,6 +17,18 @@ const About = resolve => require(['../views/other/About'], resolve)
 const Payment = resolve => require(['../views/other/Payment'], resolve)
 const Error404 = resolve => require(['../views/error/404'], resolve)
 
+const UserInfo = resolve => require(['../views/account/UserInfo'], resolve)
+const UserArticles = resolve => require(['../views/account/UserArticles'], resolve)
+const UserReplies = resolve => require(['../views/account/UserReplies'], resolve)
+const UserLikesUsers = resolve => require(['../views/account/UserLikesUsers'], resolve)
+const UserLikesArticles = resolve => require(['../views/account/UserLikesArticles'], resolve)
+
+const EditCommon = resolve => require(['../views/editUserInfo/Common'], resolve)
+const EditAvatar = resolve => require(['../views/editUserInfo/EditAvatar'], resolve)
+const EditPassword = resolve => require(['../views/editUserInfo/EditPassword'], resolve)
+const EditUserInfo = resolve => require(['../views/editUserInfo/EditUserInfo'], resolve)
+
+
 Vue.use(Router)
 
 const router = new Router({
@@ -39,7 +51,7 @@ const router = new Router({
       children: [
         {
           path: '/',
-          redirect: { name: 'ArticleIndex' }//重定向到文章列表
+          redirect: {name: 'ArticleIndex'}//重定向到文章列表
         },
         {
           path: '/articles',
@@ -65,6 +77,57 @@ const router = new Router({
             requireAuth: true
           },
           component: ArticleEdit//编辑文章
+        },
+        {
+          path: '/users/:slug',
+          component: UserInfo,// 用户个人信息框架
+          children: [
+            {
+              path: '/',
+              component: UserArticles//用户所有文章
+            },
+            {
+              path: 'articles',
+              name: 'UserArticles',
+              component: UserArticles//用户所有文章
+            },
+            {
+              path: 'replies',
+              name: 'UserReplies',
+              component: UserReplies//用户所有评论
+            },
+            {
+              path: 'likes_users',
+              name: 'UserLikesUsers',
+              component: UserLikesUsers//用户所有关注的用户
+            },
+            {
+              path: 'likes_articles',
+              name: 'UserLikesArticles',
+              component: UserLikesArticles//用户所有点赞的文章
+            }
+          ]
+        },
+        {
+          path: 'users/:slug',
+          component: EditCommon,// 用户编辑界面框架
+          children: [
+            {
+              path: 'edit',
+              name: 'EditUserInfo',
+              component: EditUserInfo//用户信息编辑
+            },
+            {
+              path: 'edit_password',
+              name: 'EditPassword',
+              component: EditPassword//用户密码修改
+            },
+            {
+              path: 'edit_avatar',
+              name: 'EditAvatar',
+              component: EditAvatar//用户头像修改
+            },
+          ]
         },
         {
           path: '/about',
