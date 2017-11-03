@@ -23,6 +23,18 @@
               </el-select>
             </div>
             <div class="article-create">
+              <dt>封面图片：</dt>
+              <el-upload class="avatar-uploader"
+                         style="padding-left: 17%;"
+                         :action="upload_cover_url"
+                         :show-file-list="false"
+                         :on-success="handleCoverSuccess"
+                         :headers="{Authorization: getTocken()}">
+                <img v-if="params.cover" :src="params.cover" class="avatar">
+                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+              </el-upload>
+            </div>
+            <div class="article-create">
               <dt style="margin-right: 2%">内容：</dt>
               <markdown-editor style="width: 70%; padding-left: 17%;" ref="markdownEditor" :configs="configs"
                                :highlight="true" :custom-theme="true" v-model="params.body">
@@ -34,7 +46,7 @@
                 class="upload-image"
                 name="image"
                 drag
-                :action= "upload_url"
+                :action= "upload_content_url"
                 :headers="{Authorization: getTocken()}"
                 multiple
                 :before-upload="beforeAvatarUpload"
@@ -74,18 +86,20 @@
 
   export default {
     components: {
-      markdownEditor
+      markdownEditor,
     },
     props: ['type'],
     data() {
       return {
-        upload_url: this.$http.options.root + '/content_image',
+        upload_content_url: this.$http.options.root + '/content_image',
         params: {
           title: '',
+          cover: '',//文章封面路径
           body: '',
           category: '',
           is_hidden: 'F'
         },
+        upload_cover_url: this.$http.options.root + '/article_cover_image',//文章封面api path
         options: [
           {value: 'F', label: '是'},
           {value: 'T', label: '否'}
@@ -147,9 +161,10 @@
           let form = {
             tag: this.tags,
             is_hidden: this.params.is_hidden,
+            cover: this.params.cover,
             title: this.params.title,
             body: this.params.body,
-            category: this.params.category
+            category: this.params.category,
           }
           api.edit_article(this.$route.params.slug, form).then((res) => {
             if (res.data.status === 1) {
@@ -207,6 +222,11 @@
         let imageUrl = response.data.url;
         console.log(file.name + '\n' +imageUrl);
         this.params.body += `![](${imageUrl})`;
+      },
+      handleCoverSuccess(response, file, fileList) {
+        if (1 == response.status) {
+          this.params.cover = response.data.url;
+        }
       }
     }
   }
@@ -280,6 +300,30 @@
       padding: 10px 0 0 35px;
       text-align: left;
     }
+  }
+
+  .avatar-uploader .el-upload {
+    border: 1px solid #aaa;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #00b5ad;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 120px;
+    line-height: 120px;
+    text-align: center;
+  }
+  .avatar {
+    width: 178px;
+    height: 120px;
+    display: block;
   }
 
 </style>
