@@ -1,4 +1,4 @@
-## icheyy微信社区的vue.js前台项目，地址：www.icheyy.top(研发中)
+## icheyy微社区的vue.js前台项目，地址：[www.icheyy.top(研发中)](http://www.icheyy.top)
 
 > 前后端分离，通过 token 验证用户信息，调取后端 API。
 
