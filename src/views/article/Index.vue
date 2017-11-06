@@ -10,7 +10,10 @@
                 <h3>{{article.title}}</h3>
               </router-link>
               <div style="padding-top: 5px; font-size: 13px; color: #bbb">由
-                <router-link :to="{name: 'UserArticles', params: {slug: article.user.id}}">{{article.user.name}}</router-link> 发表于 {{article.created_at}}</div>
+                <router-link :to="{name: 'UserArticles', params: {slug: article.user.id}}">{{article.user.name}}
+                </router-link>
+                发表于 {{article.created_at}}
+              </div>
               <div class="content-body-body">
                 {{ article.abstract }} ...
               </div>
@@ -43,7 +46,8 @@
           <div style="clear:both; border-bottom: 1px solid #ddd; padding-top: 40px"></div>
         </div>
         <div style="text-align: right; margin-top: 20px">
-          <el-pagination layout="prev, pager, next" :total="total" :page-size="page_size" @current-change="handleCurrentChange">
+          <el-pagination layout="prev, pager, next" :total="total" :page-size="page_size"
+                         @current-change="handleCurrentChange">
           </el-pagination>
         </div>
       </el-col>
@@ -116,18 +120,18 @@
         })
       },
       message_true() {
-//      this.$notify.success({
-//        title: '激活成功',
-//        message: '感谢您支持 LaraVue，祝您使用愉快！',
-//        offset: 100
-//      });
+        this.$notify.success({
+          title: '激活成功',
+          message: '感谢您支持 Cheyy小镇，祝您使用愉快！',
+          offset: 100
+        });
       },
       message_false() {
-//      this.$notify.success({
-//        title: '激活失败',
-//        message: '请联系管理员（root@laravue.org）激活用户！',
-//        offset: 100
-//      });
+        this.$notify.success({
+          title: '激活失败',
+          message: '请联系管理员（root@icheyy.top）激活用户！',
+          offset: 100
+        });
       },
       handleCurrentChange(page) {
         this.get_articles(page);

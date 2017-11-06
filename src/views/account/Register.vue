@@ -122,7 +122,7 @@ export default {
       //element-ui提示组件
       this.$notify.success({
         title: '注册成功',
-        message: '感谢您支持 Cheyy小镇，稍后请登录您的账号',
+        message: '感谢您支持 Cheyy小镇，请先到前往邮箱激活账号',
         offset: 100
       });
     },

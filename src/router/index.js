@@ -7,6 +7,8 @@ import 'nprogress/nprogress.css';
 const Common = resolve => require(['../views/Common'], resolve)//懒加载
 const Login = resolve => require(['../views/account/Login'], resolve) //懒加载
 const Register = resolve => require(['../views/account/Register'], resolve)
+const VerifyEmail = resolve => require(['../views/account/VerifyEmail'], resolve)
+
 
 const ArticleIndex = resolve => require(['../views/article/Index'], resolve)
 const ArticleShow = resolve => require(['../views/article/Show'], resolve)
@@ -45,6 +47,11 @@ const router = new Router({
       path: '/user/register',//注册
       name: 'Register',
       component: Register
+    },
+    {
+      path: '/verify_email/:slug',
+      name: 'VerifyEmail',
+      component: VerifyEmail// 验证邮箱
     },
     {
       path: '/',
