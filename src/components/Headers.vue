@@ -11,7 +11,7 @@
               </router-link>
             </div>
             <div class="head-nav">
-              <router-link class="head-link" to="/">首页</router-link>
+              <router-link class="head-link" to="/articles">首页</router-link>
             </div>
             <div class="head-nav">
               <router-link class="head-link" to="/payment">打赏</router-link>
@@ -89,7 +89,7 @@
     }),
     data() {
       return {
-        searchKey: ''
+        searchKey: '',
       }
     },
     mounted() {
@@ -131,15 +131,16 @@
         );
       },
       search() {
-        this.$router.push({ path: '/search', query: { q: this.searchKey }});
+        this.$router.push({path: '/search', query: {q: this.searchKey}});
         this.searchKey = '';
-      }
+      },
     }
   }
 </script>
 
 <style lang="scss" scoped>
   @import "../common/scss/variable";
+
   .header {
     border-bottom: #ddd solid 1px;
   }
@@ -164,6 +165,10 @@
           border-bottom: 1px solid #00b5ad;
           margin-bottom: -1px;
         }
+      }
+      .router-link-active {
+        color: #00b5ad;
+        border-bottom: 1px solid #00b5ad;
       }
     }
   }
