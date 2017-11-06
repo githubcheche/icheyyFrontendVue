@@ -28,6 +28,8 @@ const EditAvatar = resolve => require(['../views/editUserInfo/EditAvatar'], reso
 const EditPassword = resolve => require(['../views/editUserInfo/EditPassword'], resolve)
 const EditUserInfo = resolve => require(['../views/editUserInfo/EditUserInfo'], resolve)
 
+const Search = resolve => require(['../views/Search'], resolve)
+
 
 Vue.use(Router)
 
@@ -128,6 +130,11 @@ const router = new Router({
               component: EditAvatar//用户头像修改
             },
           ]
+        },
+        {
+          path: 'search',
+          name: 'Search',
+          component: Search,// 搜索结果展示
         },
         {
           path: '/about',

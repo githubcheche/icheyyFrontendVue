@@ -20,8 +20,8 @@
               <router-link class="head-link" to="/about">关于</router-link>
             </div>
             <div style="float: left; padding-left: 40px">
-              <form method="GET" action="/search" accept-charset="UTF-8">
-                <input class="search-input" name="q" type="text" placeholder="搜索">
+              <form method="GET" action="/search" accept-charset="UTF-8" @submit.prevent="search()">
+                <input class="search-input" name="q" v-model="searchKey" type="text" placeholder="搜索">
               </form>
             </div>
           </div>
@@ -87,6 +87,11 @@
     computed: mapState({
       auth: state => state.account.auth,
     }),
+    data() {
+      return {
+        searchKey: ''
+      }
+    },
     mounted() {
       //this.websocket();
     },
@@ -124,6 +129,10 @@
             this.$router.push('/')
           }
         );
+      },
+      search() {
+        this.$router.push({ path: '/search', query: { q: this.searchKey }});
+        this.searchKey = '';
       }
     }
   }

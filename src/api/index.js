@@ -91,18 +91,21 @@ export default {
     return Vue.http.get('tags');
   },
   is_like_or_not(id) {
-    return Vue.http.get('article/is_like', { params: { id: id } });
+    return Vue.http.get('article/is_like', {params: {id: id}});
   },
   like(id) {
-    return Vue.http.get('article/like', { params: { id: id } });
+    return Vue.http.get('article/like', {params: {id: id}});
   },
   is_follow_or_not(id) {
-    return Vue.http.get('user/is_follow', { params: { id: id } });
+    return Vue.http.get('user/is_follow', {params: {id: id}});
   },
   follow(id) {
-    return Vue.http.get('user/follow', { params: { id: id } });
+    return Vue.http.get('user/follow', {params: {id: id}});
   },
   get_categories() {
     return Vue.http.get('categories');
-  }
+  },
+  search(params) {
+    return Vue.http.get('search', {params: {q: params}});
+  },
 }
